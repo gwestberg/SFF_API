@@ -9,6 +9,11 @@ namespace SFF_API.Repositories
 {
     public interface ITriviaRepository
     {
-        
+        Task <Trivia> AddTrivia(Trivia trivia);
+        Task<IEnumerable<Trivia>> GetTrivias();
+        Task<IEnumerable<Trivia>> GetTrivia(int id);
+        Task<IEnumerable<Trivia>> GetTriviaByMovieId(int id);
+        Task<Trivia> UpdateTrivia(int id, Trivia trivia);
+        Task<Trivia> DeleteTrivia(int id);
     }
 }

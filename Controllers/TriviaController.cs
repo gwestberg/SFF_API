@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SFF_API.Context;
 using SFF_API.Models;
+using SFF_API.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace SFF_API.Controllers
     public class TriviaController : ControllerBase
     {
         #region DBcontext
-        readonly RentalServiceContext _context;
-        public TriviaController(RentalServiceContext dbContext)
+        readonly ITriviaRepository _context;
+        public TriviaController(ITriviaRepository dbContext)
         {
             this._context = dbContext ?? throw new ArgumentNullException("Somethings wrong with the Database-Connection");
         }
@@ -25,93 +26,44 @@ namespace SFF_API.Controllers
 
         // POST: api/Trivia
         [HttpPost]
-        public async Task<ActionResult<Trivia>> PostTrivia(Trivia trivia)
+        public async Task<ActionResult<Trivia>> AddTrivia(Trivia trivia)
         {
-            try
-            {
-                await _context.Trivias.AddAsync(trivia);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            await _context.SaveChangesAsync();
-            return trivia;
+            return await _context.AddTrivia(trivia);
         }
 
         // GET: api/Trivia
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Trivia>>> GetTrivias()
         {
-            return await _context.Trivias
-                            .Include(t => t.Movie)
-                            .Include(t => t.Studio)
-                            .ToListAsync();
+            return Ok(await _context.GetTrivias());
         }
 
         // GET: api/Trivia/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Trivia>>> GetTrivia(int id)
         {
-            var trivia = _context.Trivias
-                            .Where(t => t.Id == id)
-                            .Include(t => t.Movie)
-                            .Include(t => t.Studio)
-                            .ToListAsync(); ;
-            if (trivia == null)
-            {
-                return NotFound();
-            }
-
-            return await trivia;
+            return Ok(await _context.GetTrivia(id));
         }
 
         // GET: api/Trivia/Movie/{id}
         [HttpGet("Movie/{id}")]
         public async Task<ActionResult<IEnumerable<Trivia>>> GetTriviaByMovieId(int id)
         {
-            var trivia = _context.Trivias
-                            .Where(t => t.Movie.Id == id)
-                            .Include(t => t.Movie)
-                            .Include(t => t.Studio)
-                            .ToListAsync();
-
-            if (trivia == null)
-            {
-                return NotFound();
-            }
-
-            return await trivia;
+            return Ok(await _context.GetTriviaByMovieId(id));
         }
 
         // PUT: api/Trivia/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTrivia(int id, Trivia trivia)
         {
-            if (id != trivia.Id)
-            {
-                return BadRequest();
-            }
-            using (_context)
-            {
-                _context.Entry(trivia).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-            return Ok();
+            return Ok(await _context.UpdateTrivia(id, trivia));
         }
 
         // DELETE: api/Trivia/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult<Trivia>> DeleteTrivia(int id)
         {
-            var trivia = await _context.Trivias.FindAsync(id);
-            if (trivia == null)
-            {
-                return NotFound();
-            }
-            _context.Entry(trivia).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(await _context.DeleteTrivia(id));
         }
 
         #endregion
