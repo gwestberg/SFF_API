@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using SFF_API.Repositories;
 using SFF_API.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 namespace SFF_API
 {
@@ -26,8 +28,18 @@ namespace SFF_API
              services.AddScoped<IReviewRepository, ReviewRepository>();
              services.AddScoped<ITriviaRepository, TriviaRepository>();
              services.AddScoped<IRentalRepository, RentalRepository>();
-            services.AddDbContext<RentalServiceContext>(opt =>
-               opt.UseSqlite("Data Source = SFF_Database.db;"));
+            services.AddDbContext<RentalServiceContext>(opt => opt.UseSqlite("Data Source = SFF_Database.db;"));
+
+            //xmlformatting
+            // https://andrewlock.net/formatting-response-data-as-xml-or-json-based-on-the-url-in-asp-net-core/
+            services.AddMvc(options =>
+            {
+                options.FormatterMappings.SetMediaTypeMappingForFormat
+                    ("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                // options.FormatterMappings.SetMediaTypeMappingForFormat
+                //     ("config", MediaTypeHeaderValue.Parse("application/xml"));
+            })
+                .AddXmlSerializerFormatters();
 
             services.AddControllers();
         }

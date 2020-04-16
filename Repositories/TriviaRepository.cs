@@ -35,7 +35,10 @@ namespace SFF_API.Repositories
 
         public async Task<IEnumerable<Trivia>> GetTrivias()
         {
-            return await _context.Trivias.ToListAsync();
+            return await _context.Trivias
+                                .Include(r => r.Movie)
+                                .Include(s => s.Studio)
+                                .ToListAsync();
         }
         public async Task<IEnumerable<Trivia>> GetTrivia(int id)
         {
@@ -50,7 +53,6 @@ namespace SFF_API.Repositories
                 return await _context.Trivias
                                 .Where(r => r.Movie.Id == id)
                                 .Include(r => r.Movie)
-                                .Include(s => s.Studio)
                                 .ToListAsync();
         }
         public async Task<Trivia> UpdateTrivia(int id, Trivia trivia)

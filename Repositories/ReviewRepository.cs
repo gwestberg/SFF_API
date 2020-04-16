@@ -39,7 +39,6 @@ namespace SFF_API.Repositories
         {
             return await _context.Reviews
                 .Where(r => r.Movie.Id == id)
-                .Include(r => r.Movie)
                 .Include(s => s.Studio)
                 .ToListAsync();
         }
@@ -48,9 +47,9 @@ namespace SFF_API.Repositories
         {
             return await _context.Reviews
                 .Where(r => r.Studio.Id == id)
-                .Include(r => r.Movie)
                 .Include(s => s.Studio)
                 .ToListAsync();
+
         }
         public async Task<Review> DeleteReview(int id)
         {
@@ -58,7 +57,6 @@ namespace SFF_API.Repositories
             _context.Entry(review).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
             return review;
-
         }
 
     }

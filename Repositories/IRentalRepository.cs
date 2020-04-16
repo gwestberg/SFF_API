@@ -1,14 +1,20 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using SFF_API.Models;
+using System.Xml.Linq;
+
 
 namespace SFF_API.Repositories
 {
     public interface IRentalRepository
     {
-        
+        Task<Rental> RentAMovie(Rental rental);
+        Task<IEnumerable<Movie>> GetRentableMovies();
+        Task <IEnumerable<Rental>> GetRentals();
+        Task<IEnumerable<Rental>> GetRental(int id);
+        Task<IEnumerable<Rental>> GetRentalsForStudio(int id);
+        Task<Rental> ReturnMovie(int id);
+        Task<Label> GetLabelForRental(int id);
+
     }
 }
