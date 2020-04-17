@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using SFF_API.Context;
 using SFF_API.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SFF_API.Repositories
 {

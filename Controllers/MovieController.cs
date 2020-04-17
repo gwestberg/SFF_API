@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SFF_API.Models;
 using System;
 using System.Collections.Generic;
@@ -54,8 +53,15 @@ namespace SFF_API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovieIAction(int id, Movie movie)
         {
-            var movieReturned = await _context.UpdateMovie(id,movie);
-            return Ok(movieReturned);
+            if(movie.Id != id)
+            {
+                return BadRequest();
+            }
+            if(movie==null)
+            {
+                return NotFound();
+            }
+            return Ok(await _context.UpdateMovie(id,movie));
         }
 
         #endregion

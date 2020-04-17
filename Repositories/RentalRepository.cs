@@ -5,8 +5,8 @@ using SFF_API.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-
+using System.IO;
+using System.Xml;
 
 namespace SFF_API.Repositories
 {
@@ -83,6 +83,8 @@ namespace SFF_API.Repositories
             return rental;
         }
 
+
+
         public async Task<Label> GetLabelForRental(int id)
         {
             var rental = await _context.Rentals.Where(r=>r.Id == id)
@@ -94,7 +96,6 @@ namespace SFF_API.Repositories
             label.MovieTitle = rental.Movie.Title;
             label.StudioLocation = rental.Studio.Location;
             label.DateRented = DateTime.UtcNow;
-
             return label;
         }
     }
