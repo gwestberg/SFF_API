@@ -19,7 +19,7 @@ namespace SFF_API.Repositories
             this._context = dbContext ?? throw new ArgumentNullException("Somethings wrong with the Database-Connection");
         }
         #endregion
-
+        
         public async Task<Studio> AddStudio(Studio studio)
         {
             try
@@ -53,6 +53,7 @@ namespace SFF_API.Repositories
             return dbstudio;
 
         }
+        
         public async Task<Studio> UpdateStudio(int id, Studio studio)
         {
              _context.Entry(studio).State = EntityState.Modified;

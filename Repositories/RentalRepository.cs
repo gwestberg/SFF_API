@@ -82,6 +82,7 @@ namespace SFF_API.Repositories
             await _context.SaveChangesAsync();
             return rental;
         }
+
         public async Task<Label> GetLabelForRental(int id)
         {
             var rental = await _context.Rentals.Where(r=>r.Id == id)
@@ -93,7 +94,6 @@ namespace SFF_API.Repositories
             label.MovieTitle = rental.Movie.Title;
             label.StudioLocation = rental.Studio.Location;
             label.DateRented = DateTime.UtcNow;
-            //System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(label.GetType());
 
             return label;
         }

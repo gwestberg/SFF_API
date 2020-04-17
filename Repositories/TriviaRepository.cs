@@ -40,6 +40,7 @@ namespace SFF_API.Repositories
                                 .Include(s => s.Studio)
                                 .ToListAsync();
         }
+        
         public async Task<IEnumerable<Trivia>> GetTrivia(int id)
         {
             return await _context.Trivias
@@ -48,6 +49,7 @@ namespace SFF_API.Repositories
                                 .Include(s => s.Studio)
                                 .ToListAsync();
         }
+        
         public async Task<IEnumerable<Trivia>> GetTriviaByMovieId(int id)
         {
                 return await _context.Trivias
@@ -55,12 +57,14 @@ namespace SFF_API.Repositories
                                 .Include(r => r.Movie)
                                 .ToListAsync();
         }
+       
         public async Task<Trivia> UpdateTrivia(int id, Trivia trivia)
         {
             _context.Entry(trivia).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return trivia;
         }
+        
         public async Task<Trivia> DeleteTrivia(int id)
         {
             var dbTrivia = await _context.Trivias.FindAsync(id);
