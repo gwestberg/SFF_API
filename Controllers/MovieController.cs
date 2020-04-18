@@ -53,6 +53,18 @@ namespace SFF_API.Controllers
             return Ok(movie); 
         }
 
+        //DELETE api/Movie/{id}
+        [HttpDelete("{id}")]
+         public async Task<IActionResult> DeleteMovie(int id)
+        {
+            var movie = await _context.DeleteMovie(id);
+            if (movie == null)
+            {
+                NotFound();
+            }
+            return Ok(movie);
+        }
+
         //PUT: api/Movie/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMovieIAction(int id, Movie movie)

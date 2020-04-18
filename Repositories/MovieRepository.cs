@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SFF_API.Repositories
 {
-    public class MovieRepository: IMovieRepository
+    public class MovieRepository : IMovieRepository
     {
         #region DBcontext
         readonly RentalServiceContext _context;
@@ -36,13 +36,22 @@ namespace SFF_API.Repositories
         {
             return await _context.Movies.Where(m => m.Id == Id).FirstAsync();
         }
+
+        public async Task<Movie> DeleteMovie(int id)
+        {
+            var dbMovie = await _context.Movies.FindAsync(id);
+
+            _context.Entry(dbMovie).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+            return dbMovie;
+        }
         public async Task<Movie> UpdateMovie(int Id, Movie movie)
         {
             var dbMovie = await _context.Movies
                                         .Where(m => m.Id == movie.Id)
                                         .FirstAsync();
-                                        
-             _context.Entry(dbMovie).State = EntityState.Modified;
+
+            _context.Entry(dbMovie).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return dbMovie;
         }

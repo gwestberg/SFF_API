@@ -13,5 +13,6 @@ namespace SFF_API.Repositories
         Task<ActionResult<Movie>> GetMovie(int id);
         Task<ActionResult<Movie>> AddMovie(Movie movie);
         Task<Movie> UpdateMovie(int Id, Movie movie);
+        Task <Movie> DeleteMovie(int id);
     }
 }
