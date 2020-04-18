@@ -31,22 +31,26 @@ namespace SFF_API.Controllers
             {
                 return NotFound();
             }
-            await _context.AddMovie(movie);
-            return Ok(movie);
+            return Ok(await _context.AddMovie(movie));
         }
 
         //GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return await _context.GetMovies();
+            return Ok(await _context.GetMovies());
         }
         
         //GET: api/Movies/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
-            return Ok( await _context.GetMovie(id)); 
+            var movie = await _context.GetMovie(id);
+            if(movie == null)
+            {
+                NotFound();
+            }
+            return Ok(movie); 
         }
 
         //PUT: api/Movie/{id}

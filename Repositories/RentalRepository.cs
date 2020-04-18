@@ -83,8 +83,6 @@ namespace SFF_API.Repositories
             return rental;
         }
 
-
-
         public async Task<Label> GetLabelForRental(int id)
         {
             var rental = await _context.Rentals.Where(r=>r.Id == id)

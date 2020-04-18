@@ -25,30 +25,48 @@ namespace SFF_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Studio>> AddStudio(Studio studio)
         {
-            return await _context.AddStudio(studio);
+            var studios = await _context.AddStudio(studio);
+            if (studios == null)
+            {
+                NotFound();
+            }
+            return Ok(studios);
         }
 
         //Get: api/Studio
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Studio>>> GetStudios()
         {
-            return await _context.GetStudios();
+            var studios = await _context.GetStudios();
+            if (studios == null)
+            {
+                NotFound();
+            }
+            return Ok(studios);
         }
 
         //GET: api/Studio/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Studio>> GetStudio(int id)
         {
-            return await _context.GetStudio(id);
+            var studios = await _context.GetStudios();
+            if (studios == null)
+            {
+                NotFound();
+            }
+            return Ok(studios);
         }
 
         //DELETE: api/Studio/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudio(int id)
         {
-
-            return Ok(await _context.DeleteStudio(id));
-
+            var studios = await _context.DeleteStudio(id);
+            if (studios == null)
+            {
+                NotFound();
+            }
+            return Ok(studios);
         }
 
         //PUT: api/Studio/{id}
@@ -59,12 +77,10 @@ namespace SFF_API.Controllers
             {
                 return BadRequest();
             }
-
             if (studio == null)
             {
                 return NotFound();
             }
-
             return Ok(await _context.UpdateStudio(id, studio));
         }
 

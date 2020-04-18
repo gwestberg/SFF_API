@@ -36,8 +36,6 @@ namespace SFF_API
             {
                 options.FormatterMappings.SetMediaTypeMappingForFormat
                     ("xml", MediaTypeHeaderValue.Parse("application/xml"));
-                // options.FormatterMappings.SetMediaTypeMappingForFormat
-                //     ("config", MediaTypeHeaderValue.Parse("application/xml"));
             })
                 .AddXmlSerializerFormatters();
 

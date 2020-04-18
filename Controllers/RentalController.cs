@@ -25,6 +25,10 @@ namespace SFF_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Rental>> RentAMovie(Rental rental)
         {
+            if (rental == null)
+            {
+                NotFound();
+            }
            return Ok(await _context.RentAMovie(rental));
         }
 
@@ -33,15 +37,25 @@ namespace SFF_API.Controllers
         [HttpGet("AvailableMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetRentableMovies()
         {
-            return Ok(await _context.GetRentableMovies());
+            var rentals = await _context.GetRentableMovies();
+            if (rentals == null)
+            {
+                NotFound();
+            }
+            return Ok(rentals);
         }
         
         //Gets all active rentals
-        // GET: api/Rental/ActiveRentals
-        [HttpGet("ActiveRentals")]
+        // GET: api/Rental
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Rental>>> GetRentals()
         {
-            return Ok(await _context.GetRentals());
+            var rentals = await _context.GetRentals();
+            if (rentals == null)
+            {
+                NotFound();
+            }
+            return Ok(rentals);
         }
 
         //Gets the specific rental
@@ -49,14 +63,24 @@ namespace SFF_API.Controllers
         [HttpGet("{id}")]
         public async  Task<ActionResult<IEnumerable<Rental>>> GetRental(int id)
         {
-            return Ok(await _context.GetRental(id));
+            var rental = await _context.GetRental(id);
+            if (rental == null)
+            {
+                NotFound();
+            }
+            return Ok(rental);
         }
 
         //GET: api/Rental/Studio/RentedMovies/{id}
         [HttpGet("Studio/RentedMovies/{id}")]
         public async Task<ActionResult<IEnumerable<Rental>>> GetRentalsForStudio(int id)
         {
-            return Ok(await _context.GetRentalsForStudio(id));
+            var rentals = await _context.GetRentalsForStudio(id);
+            if (rentals == null)
+            {
+                NotFound();
+            }
+            return Ok(rentals);
         }
 
         // DELETE: api/Rentals/{id}
@@ -64,8 +88,12 @@ namespace SFF_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Rental>> ReturnMovie(int id)
         {
-
-            return Ok(await _context.ReturnMovie(id));
+            var rental = await _context.ReturnMovie(id);
+            if (rental ==null)
+            {
+                NotFound();
+            }
+            return Ok(rental);
         }
 
         //// GET: api/Rental/Label
@@ -75,7 +103,12 @@ namespace SFF_API.Controllers
         [HttpGet("Label.{format}/{id}"), FormatFilter]
         public async Task<ActionResult<Label>> GetLabelForRental(int id)
         {
-            return Ok(await _context.GetLabelForRental(id));
+            var label = await _context.GetLabelForRental(id);
+            if (label == null)
+            {
+                NotFound();
+            }
+            return Ok(label);
         }
     }
     #endregion

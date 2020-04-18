@@ -25,6 +25,10 @@ namespace SFF_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Review>> AddReview(Review review)
         {
+            if (review == null)
+            {
+                return NotFound();
+            }
             return Ok(await _context.AddReview(review));
         }
 
@@ -32,7 +36,12 @@ namespace SFF_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Review>>> PrintAllReviews()
         {
-            return Ok(await _context.GetReviews());
+            var reviews = await _context.GetReviews();
+            if (reviews == null)
+            {
+                NotFound();
+            }
+            return Ok(reviews);
         }
 
         //Gets Reviews for a specific Movie
@@ -40,7 +49,12 @@ namespace SFF_API.Controllers
         [HttpGet("Movie/{id}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewByMovie(int id)
         {
-            return Ok(await _context.GetReviewByMovie(id));
+            var reviews = await _context.GetReviewByMovie(id);
+            if (reviews == null)
+            {
+                NotFound();
+            }
+            return Ok(reviews);
         }
 
         //Gets Reviews by a specific studio
@@ -48,14 +62,24 @@ namespace SFF_API.Controllers
         [HttpGet("Studio/{id}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewByStudio(int id)
         {
-            return Ok(await _context.GetReviewByStudio(id));
+            var reviews = await _context.GetReviewByStudio(id);
+            if (reviews == null)
+            {
+                NotFound();
+            }
+            return Ok(reviews);
         }
         
         //DELETE api/Review/{id}
         [HttpDelete("{id}")]
          public async Task<IActionResult> DeleteReview(int id)
         {
-            return Ok(await _context.DeleteReview(id));
+            var reviews = await _context.DeleteReview(id);
+            if (reviews == null)
+            {
+                NotFound();
+            }
+            return Ok(reviews);
         }
 
         #endregion
