@@ -5,8 +5,6 @@ using SFF_API.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using System.IO;
-using System.Xml;
 
 namespace SFF_API.Repositories
 {
