@@ -10,6 +10,7 @@ namespace SFF_API.Repositories
 {
     public class RentalRepository : IRentalRepository
     {
+
         #region DBcontext
         readonly RentalServiceContext _context;
         public RentalRepository(RentalServiceContext dbContext)
@@ -75,6 +76,10 @@ namespace SFF_API.Repositories
             if (!movie.IsDigital)
             {
                 movie.IncreaseAmount(movie);
+                if(movie.NumCopies ==1)
+                {
+                    
+                }
             }
             _context.Rentals.Remove(rental);
             await _context.SaveChangesAsync();
