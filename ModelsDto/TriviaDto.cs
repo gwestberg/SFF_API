@@ -1,7 +1,6 @@
+using SFF_API.Models;
 
-
-
-namespace ModelsDto
+namespace SFF_API.ModelsDto
 {
     
 }

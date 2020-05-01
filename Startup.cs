@@ -27,7 +27,6 @@ namespace SFF_API
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<ITriviaRepository, TriviaRepository>();
             services.AddScoped<IRentalRepository, RentalRepository>();
-
             //EventTestning
             services.AddScoped<ConfirmEmailSentHandler>();
             services.AddScoped<EventHandlerContainer>();

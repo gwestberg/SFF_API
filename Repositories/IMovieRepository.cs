@@ -9,9 +9,9 @@ namespace SFF_API.Repositories
 {
     public interface IMovieRepository
     {
-        Task<ActionResult<IEnumerable<Movie>>> GetMovies();
-        Task<ActionResult<Movie>> GetMovie(int id);
-        Task<ActionResult<Movie>> AddMovie(Movie movie);
+        Task<IEnumerable<Movie>> GetMovies();
+        Task<Movie> GetMovie(int id);
+        Task<Movie> AddMovie(Movie movie);
         Task<Movie> UpdateMovie(int Id, Movie movie);
         Task <Movie> DeleteMovie(int id);
     }

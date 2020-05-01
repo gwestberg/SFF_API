@@ -20,19 +20,19 @@ namespace SFF_API.Repositories
         #endregion
 
         #region Film-relaterade Metoder
-        public async Task<ActionResult<Movie>> AddMovie(Movie movie)
+        public async Task<Movie> AddMovie(Movie movie)
         {
             await _context.Movies.AddAsync(movie);
             await _context.SaveChangesAsync();
             return movie;
         }
 
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<IEnumerable<Movie>> GetMovies()
         {
             return await _context.Movies.ToListAsync();
         }
 
-        public async Task<ActionResult<Movie>> GetMovie(int Id)
+        public async Task<Movie> GetMovie(int Id)
         {
             return await _context.Movies.Where(m => m.Id == Id).FirstAsync();
         }
