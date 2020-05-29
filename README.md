@@ -10,8 +10,10 @@ De ﬁlmer som inte hunnit digitaliseras ännu är dock reglerade för hur mång
 Din API-lösning ska vara byggt i ASP.NET Core 3.0 eller 3.1. 
 
 ● Alla endpoints ska ta emot eller returnera JSON-data 
-● I API:et ska resursen ﬁlmer ﬁnnas: ○ Det ska gå att lägga till en ny ﬁlm 
 
+● I API:et ska resursen ﬁlmer ﬁnnas: 
+
+    ○ Det ska gå att lägga till en ny ﬁlm 
     ○ Det ska gå att ändra hur många studios som kan låna ﬁlmen samtidigt 
     ○ Det ska gå att markera att en ﬁlm är utlånad till en ﬁlmstudio (man får inte låna ut den mer än ﬁlmen ﬁnns tillgänglig (max-antal samtidiga utlåningar)
       ○ Det ska gå att ändra så att ﬁlmen inte längre är utlånad till en viss ﬁlmstudio
