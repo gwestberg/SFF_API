@@ -2,6 +2,7 @@ using System;
 
 namespace SFF_API.Models
 {
+    [Serializable]
     public class Rental
     {
         public int Id { get; set; }

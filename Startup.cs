@@ -28,8 +28,8 @@ namespace SFF_API
             services.AddScoped<ITriviaRepository, TriviaRepository>();
             services.AddScoped<IRentalRepository, RentalRepository>();
             //EventTestning
-            services.AddScoped<ConfirmEmailSentHandler>();
-            services.AddScoped<EventHandlerContainer>();
+            //services.AddScoped<ConfirmEmailSentHandler>();
+            //services.AddScoped<EventHandlerContainer>();
             //-------------------------------------
 
             services.AddDbContext<RentalServiceContext>(opt => opt.UseSqlite("Data Source = SFF_Database.db;"));

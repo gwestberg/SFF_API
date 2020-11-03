@@ -11,7 +11,7 @@ namespace SFF_API.Repositories
         Task<Rental> RentAMovie(Rental rental);
         Task<IEnumerable<Movie>> GetRentableMovies();
         Task <IEnumerable<Rental>> GetRentals();
-        Task<IEnumerable<Rental>> GetRental(int id);
+        Task<Rental> GetRental(int id);
         Task<IEnumerable<Rental>> GetRentalsForStudio(int id);
         Task<Rental> ReturnMovie(int id);
         Task<Label> GetLabelForRental(int id);

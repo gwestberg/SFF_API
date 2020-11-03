@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SFF_API.Models;
+using SFF_API.ModelsDto;
 using SFF_API.Repositories;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SFF_API.Controllers
             {
                 NotFound();
             }
-           return Ok(await _context.RentAMovie(rental));
+            return Ok(new RentalDto(await _context.RentAMovie(rental)));
         }
 
         //Gets all available movies
@@ -37,23 +38,35 @@ namespace SFF_API.Controllers
         [HttpGet("AvailableMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetRentableMovies()
         {
-            var rentals = await _context.GetRentableMovies();
-            if (rentals == null)
+            var rentalsFromRepo = await _context.GetRentableMovies();
+            if (rentalsFromRepo == null)
             {
                 NotFound();
             }
-            return Ok(rentals);
+
+            var movies = new List<MovieDto>();
+            foreach (var movie in rentalsFromRepo)
+            {
+                movies.Add(new MovieDto(movie));
+            }
+            return Ok(movies);
         }
-        
+
         //Gets all active rentals
         // GET: api/Rental
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rental>>> GetRentals()
         {
-            var rentals = await _context.GetRentals();
-            if (rentals == null)
+            var rentalsFromRepo = await _context.GetRentals();
+            if (rentalsFromRepo == null)
             {
                 NotFound();
+            }
+
+            var rentals = new List<RentalDto>();
+            foreach (var rental in rentalsFromRepo)
+            {
+                rentals.Add(new RentalDto(rental));
             }
             return Ok(rentals);
         }
@@ -61,9 +74,9 @@ namespace SFF_API.Controllers
         //Gets the specific rental
         // GET: api/Rental/{id}
         [HttpGet("{id}")]
-        public async  Task<ActionResult<IEnumerable<Rental>>> GetRental(int id)
+        public async Task<ActionResult<Rental>> GetRental(int id)
         {
-            var rental = await _context.GetRental(id);
+            var rental = new RentalDto( await _context.GetRental(id));
             if (rental == null)
             {
                 NotFound();
@@ -89,7 +102,7 @@ namespace SFF_API.Controllers
         public async Task<ActionResult<Rental>> ReturnMovie(int id)
         {
             var rental = await _context.ReturnMovie(id);
-            if (rental ==null)
+            if (rental == null)
             {
                 NotFound();
             }
