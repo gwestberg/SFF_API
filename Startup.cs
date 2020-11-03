@@ -22,11 +22,16 @@ namespace SFF_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddScoped<IMovieRepository, MovieRepository>();
-             services.AddScoped<IStudioRepository, StudioRepository>();
-             services.AddScoped<IReviewRepository, ReviewRepository>();
-             services.AddScoped<ITriviaRepository, TriviaRepository>();
-             services.AddScoped<IRentalRepository, RentalRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IStudioRepository, StudioRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<ITriviaRepository, TriviaRepository>();
+            services.AddScoped<IRentalRepository, RentalRepository>();
+            //EventTestning
+            //services.AddScoped<ConfirmEmailSentHandler>();
+            //services.AddScoped<EventHandlerContainer>();
+            //-------------------------------------
+
             services.AddDbContext<RentalServiceContext>(opt => opt.UseSqlite("Data Source = SFF_Database.db;"));
 
             //xmlformatting

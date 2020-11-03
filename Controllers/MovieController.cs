@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SFF_API.Repositories;
+using SFF_API.ModelsDto;
 
 namespace SFF_API.Controllers
 {
@@ -31,21 +32,27 @@ namespace SFF_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(await _context.AddMovie(movie));
+            return Ok(new MovieDto(await _context.AddMovie(movie)));
         }
 
         //GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return Ok(await _context.GetMovies());
+            var moviesFromRepo = await _context.GetMovies();
+            var movies =  new List<MovieDto>();
+            foreach (var movie in moviesFromRepo)
+            {
+                movies.Add(new MovieDto(movie));
+            }
+            return Ok(movies);
         }
         
         //GET: api/Movies/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
-            var movie = await _context.GetMovie(id);
+            var movie= new MovieDto(await _context.GetMovie(id));
             if(movie == null)
             {
                 NotFound();
@@ -57,7 +64,7 @@ namespace SFF_API.Controllers
         [HttpDelete("{id}")]
          public async Task<IActionResult> DeleteMovie(int id)
         {
-            var movie = await _context.DeleteMovie(id);
+            var movie = new MovieDto(await _context.DeleteMovie(id));
             if (movie == null)
             {
                 NotFound();
@@ -77,7 +84,7 @@ namespace SFF_API.Controllers
             {
                 return NotFound();
             }
-            return Ok(await _context.UpdateMovie(id,movie));
+            return Ok(new MovieDto(await _context.UpdateMovie(id,movie)));
         }
 
         #endregion

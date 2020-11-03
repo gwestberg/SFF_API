@@ -10,6 +10,7 @@ namespace SFF_API.Repositories
 {
     public class RentalRepository : IRentalRepository
     {
+
         #region DBcontext
         readonly RentalServiceContext _context;
         public RentalRepository(RentalServiceContext dbContext)
@@ -33,7 +34,7 @@ namespace SFF_API.Repositories
             }
             _context.Entry(movie).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return rental;
+            return await _context.Rentals.FindAsync(rental.Id);
         }
 
         public async Task<IEnumerable<Movie>> GetRentableMovies()
@@ -51,13 +52,12 @@ namespace SFF_API.Repositories
                                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Rental>> GetRental(int id)
+        public async Task<Rental> GetRental(int id)
         {
-            return await _context.Rentals
-                                .Where(x => x.Id == id)
-                                .Include(x => x.Movie)
-                                .Include(x => x.Studio)
-                                .ToListAsync();
+            return await _context.Rentals.FindAsync(id);
+                                // .Include(x => x.Movie)
+                                // .Include(x => x.Studio)
+                                // .ToListAsync();
         }
         public async Task<IEnumerable<Rental>> GetRentalsForStudio(int id)
         {
@@ -75,6 +75,10 @@ namespace SFF_API.Repositories
             if (!movie.IsDigital)
             {
                 movie.IncreaseAmount(movie);
+                if(movie.NumCopies ==1)
+                {
+                    
+                }
             }
             _context.Rentals.Remove(rental);
             await _context.SaveChangesAsync();
